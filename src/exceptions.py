@@ -13,3 +13,7 @@ class UserException(HTTPException):
 class UserAlreadyExistsException(UserException):
     status_code=status.HTTP_409_CONFLICT
     detail="Пользователь уже существует"
+
+class IncorrectEmailOrPasswordException(UserException):
+    status_code=status.HTTP_401_UNAUTHORIZED
+    detail="Неверная почта или пароль"
