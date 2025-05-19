@@ -5,9 +5,15 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12.8"
 dependencies = [
+    "alembic>=1.15.2",
+    "asyncpg>=0.30.0",
+    "bcrypt==3.2.0",
+    "email-validator>=2.2.0",
     "fastapi>=0.115.12",
     "passlib>=1.7.4",
+    "pydantic-settings>=2.9.1",
     "python-jose[cryptography]>=3.4.0",
+    "sqlalchemy>=2.0.41",
     "uvicorn>=0.34.2",
 ]
 
@@ -17,3 +23,8 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.10",
+]

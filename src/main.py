@@ -1,9 +1,7 @@
 from fastapi import FastAPI
 
+from src.librarians.router import router as router_librarians
 
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+app.include_router(router_librarians)
