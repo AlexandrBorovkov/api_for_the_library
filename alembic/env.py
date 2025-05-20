@@ -5,6 +5,7 @@ from sqlalchemy import engine_from_config, pool
 from alembic import context
 from src.database import DATABASE_URL, Base
 from src.librarians.models import Librarian
+from src.books.models import Book
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

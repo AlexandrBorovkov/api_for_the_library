@@ -1,14 +1,20 @@
 from fastapi import APIRouter, Response
 
-from src.exceptions import IncorrectEmailOrPasswordException, UserAlreadyExistsException
-from src.librarians.auth import authenticate_librarian, create_access_token, get_password_hash
+from src.exceptions import (
+    IncorrectEmailOrPasswordException,
+    UserAlreadyExistsException,
+)
+from src.librarians.auth import (
+    authenticate_librarian,
+    create_access_token,
+    get_password_hash,
+)
 from src.librarians.dao import LibrarianDAO
 from src.librarians.schemas import SLibrarian
 
-
 router = APIRouter(
     prefix="/auth",
-    tags=["Библиотекари"])
+    tags=["Librarians"])
 
 @router.post("/register")
 async def register_librarian(librarian_data: SLibrarian):
@@ -25,7 +31,10 @@ async def register_librarian(librarian_data: SLibrarian):
 
 @router.post("/login")
 async def login_librarian(response: Response, librarian_data: SLibrarian):
-    librarian = await authenticate_librarian(librarian_data.email, librarian_data.password)
+    librarian = await authenticate_librarian(
+        librarian_data.email,
+        librarian_data.password
+    )
     if not librarian:
         raise IncorrectEmailOrPasswordException
     access_token = create_access_token({"sub": str(librarian.id)})

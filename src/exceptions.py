@@ -17,3 +17,22 @@ class UserAlreadyExistsException(UserException):
 class IncorrectEmailOrPasswordException(UserException):
     status_code=status.HTTP_401_UNAUTHORIZED
     detail="Неверная почта или пароль"
+
+
+class TokenExpiredException(UserException):
+    status_code=status.HTTP_401_UNAUTHORIZED
+    detail="Токен истек"
+
+
+class TokenAbsentException(UserException):
+    status_code=status.HTTP_401_UNAUTHORIZED
+    detail="Токен отсутствует"
+
+
+class IncorrectTokenFormatException(UserException):
+    status_code=status.HTTP_401_UNAUTHORIZED
+    detail="Неверный формат токена"
+
+
+class UserIsNotPresentException(UserException):
+    status_code=status.HTTP_401_UNAUTHORIZED
