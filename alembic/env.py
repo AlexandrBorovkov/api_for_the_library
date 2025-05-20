@@ -6,6 +6,7 @@ from alembic import context
 from src.database import DATABASE_URL, Base
 from src.librarians.models import Librarian
 from src.books.models import Book
+from src.readers.models import Reader
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
