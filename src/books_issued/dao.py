@@ -11,7 +11,10 @@ from src.exceptions.book_exceptions import (
     BookNotAvailableException,
     LimitationNumberBooksException,
     LimitPerInstanceException,
+    TheBookWasNotFoundException,
 )
+from src.exceptions.user_exceptions import TheReaderWasNotFoundException
+from src.readers.models import Reader
 
 
 class BorrowedBookDAO:
@@ -41,6 +44,13 @@ class BorrowedBookDAO:
             book_query = select(Book).filter_by(id=book_id)
             book_result = await session.execute(book_query)
             book = book_result.scalar_one_or_none()
+            if book is None:
+                raise TheBookWasNotFoundException
+            reader_query = select(Reader).filter_by(id=reader_id)
+            reader = await session.execute(reader_query)
+            reader = reader.scalar_one_or_none()
+            if reader is None:
+                raise TheReaderWasNotFoundException
             if book.books_count < 1:
                 raise BookNotAvailableException
             reader_books_query = (

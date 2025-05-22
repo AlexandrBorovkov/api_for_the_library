@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 
 class UserException(HTTPException):
 
-    status_code = 500
+    status_code = 400
     detail = ""
 
     def __init__(self):
