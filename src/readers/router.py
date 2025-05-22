@@ -7,12 +7,12 @@ from src.readers.schemas import SReader
 
 router = APIRouter(prefix="/readers", tags=["Readers"])
 
-@router.get("/reader")
+@router.get("/show_reader")
 async def show_reader(
     reader_id: int,
     librarian: Librarian = Depends(get_current_user)
 ):
-    result = await ReaderDAO.find_by_id(reader_id)
+    result = await ReaderDAO.show_reader(reader_id)
     return result
 
 @router.get("/all_readers")

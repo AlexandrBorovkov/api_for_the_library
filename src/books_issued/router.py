@@ -8,8 +8,16 @@ from src.librarians.models import Librarian
 router = APIRouter(prefix="/borrowedbooks", tags=["Borrowedbooks"])
 
 @router.get("/all_books_issued")
-async def get_books(librarian: Librarian = Depends(get_current_user)):
+async def get_books_issued(librarian: Librarian = Depends(get_current_user)):
     result = await BorrowedBookDAO.get_books_issued()
+    return result
+
+@router.get("/reader_books")
+async def get_reader_books(
+    reader_id: int,
+    librarian: Librarian = Depends(get_current_user)
+):
+    result = await BorrowedBookDAO.get_reader_books(reader_id)
     return result
 
 @router.post("/borrow_book")

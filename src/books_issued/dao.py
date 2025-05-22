@@ -6,7 +6,7 @@ from sqlalchemy.orm import selectinload
 from src.books.models import Book
 from src.books_issued.models import BorrowedBook
 from src.database import async_session_maker
-from src.exceptions.borrowed_books_exceptions import (
+from src.exceptions.book_exceptions import (
     ActiveIssueWasNotFoundException,
     BookNotAvailableException,
     LimitationNumberBooksException,
@@ -22,6 +22,16 @@ class BorrowedBookDAO:
     async def get_books_issued(cls):
         async with async_session_maker() as session:
             query = select(cls.model)
+            result = await session.execute(query)
+            return result.scalars().all()
+
+    @classmethod
+    async def get_reader_books(cls, reader_id):
+        async with async_session_maker() as session:
+            query = select(cls.model).filter(
+                cls.model.reader_id == reader_id,
+                cls.model.return_date.is_(None)
+            )
             result = await session.execute(query)
             return result.scalars().all()
 
@@ -44,7 +54,7 @@ class BorrowedBookDAO:
             reader_books_count = await session.scalar(reader_books_query)
             if reader_books_count >= 3:
                 raise LimitationNumberBooksException
-            active_borrow_query = select(BorrowedBook).where(
+            active_borrow_query = select(BorrowedBook).filter(
                 BorrowedBook.book_id == book_id,
                 BorrowedBook.reader_id == reader_id,
                 BorrowedBook.return_date.is_(None)
