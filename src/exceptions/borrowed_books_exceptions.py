@@ -18,3 +18,6 @@ class LimitationNumberBooksException(BorrowedBookException):
 
 class LimitPerInstanceException(BorrowedBookException):
     detail="Читатель уже имеет экземпляр данной книги"
+
+class ActiveIssueWasNotFoundException(BorrowedBookException):
+    detail="Запись о выдаче не найдена"

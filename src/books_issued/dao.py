@@ -7,6 +7,7 @@ from src.books.models import Book
 from src.books_issued.models import BorrowedBook
 from src.database import async_session_maker
 from src.exceptions.borrowed_books_exceptions import (
+    ActiveIssueWasNotFoundException,
     BookNotAvailableException,
     LimitationNumberBooksException,
     LimitPerInstanceException,
@@ -73,6 +74,8 @@ class BorrowedBookDAO:
                 )
                 .options(selectinload(cls.model.book)))
             row = await session.execute(query)
-            row = row.scalar_one()
+            row = row.scalar_one_or_none()
+            if not row:
+                raise ActiveIssueWasNotFoundException
             row.return_book()
             await session.commit()
