@@ -24,6 +24,9 @@ def create_access_token(data: dict) -> str:
 
 async def authenticate_librarian(email: EmailStr, password: str):
     librarian = await LibrarianDAO.find_one_or_none(email=email)
-    if not librarian and not verify_password(password, librarian.password):
+    if (
+        not librarian
+        or not verify_password(password, librarian.hashed_password)
+    ):
         return None
     return librarian

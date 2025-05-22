@@ -4,7 +4,7 @@ from fastapi import Depends, Request
 from jose import JWTError, jwt
 
 from src.config import settings
-from src.exceptions import (
+from src.exceptions.user_exceptions import (
     IncorrectTokenFormatException,
     TokenAbsentException,
     TokenExpiredException,

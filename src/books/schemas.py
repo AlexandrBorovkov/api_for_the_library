@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, conint
 
 
 class SBook(BaseModel):
@@ -6,4 +6,4 @@ class SBook(BaseModel):
     author: str
     publication_year: int
     isbn: str
-    books_count: int
+    books_count: conint(ge=0)
