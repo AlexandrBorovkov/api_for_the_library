@@ -68,6 +68,23 @@
     ```sh
     make install
     ```
+3. **Переменные окружения**:
+
+    Создайте файл .env в корне проекта:
+    ```sh
+    DB_HOST=yourhost
+    DB_PORT=yourport
+    DB_USER=youruser
+    DB_NAME=yourname
+    DB_PASS=yourpass
+
+    SECRET_KEY=yourkey
+    ALGORITHM=youralgorithm
+    ```
+4. **Миграции**:
+    ```sh
+    alembic upgrade head
+    ```
 3. **Запуск приложения**:
     ```sh
     make start
