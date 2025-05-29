@@ -1,5 +1,8 @@
 PORT ?= 8000
 
+install:
+	uv sync
+
 lint:
 	uv run ruff check
 
